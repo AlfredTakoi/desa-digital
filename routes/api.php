@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\HeadOfFamilyController;
+use App\Models\FamilyMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -21,3 +23,6 @@ Route::get('users/all/paginated', [UserController::class, 'getAllPaginated']);
 
 Route::apiResource('head_of_families', HeadOfFamilyController::class);
 Route::get('head_of_families/all/paginated', [HeadOfFamilyController::class, 'getAllPaginated']);
+
+Route::apiResource('family_members', FamilyMemberController::class);
+Route::get('family_members/all/paginated', [FamilyMemberController::class, 'getAllPaginated']);

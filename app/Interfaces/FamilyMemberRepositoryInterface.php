@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface UserRepositoryInterface
+interface FamilyMemberRepositoryInterface
 {
     public function getAll(
         ?string $search,
@@ -15,9 +15,9 @@ interface UserRepositoryInterface
         ?int $rowPerPage,
     );
 
-    public function getById(string $id);
-
     public function create(array $data);
+
+    public function getById(string $id);
 
     public function update(string $id, array $data);
 

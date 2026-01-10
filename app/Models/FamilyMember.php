@@ -18,13 +18,24 @@ class FamilyMember extends Model
         'gender',
         'date_of_birth',
         'phone_number',
-        'phone_number',
+        'identity_number',
         'occupation',
-        'marital_status',
+        'relation',
     ];
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->whereHas('user', function($query) use ($search){
+            $query->where('name','LIKE','%'. $search .'%')
+            ->orWhere('email','LIKE','%'. $search .'%');
+        })->orWhere('phone_number','LIKE','%'. $search .'%')
+        ->orWhere('identity_number','LIKE','%'. $search .'%')
+        ->orWhere('occupation','LIKE','%'. $search .'%')
+        ->orWhere('relation','LIKE','%'. $search .'%');
+    }
+
     public function headOfFamily() {
-        return $this->belongsTo(HeadOFFamily::class);
+        return $this->belongsTo(HeadOfFamily::class);
     }
 
     public function user(){
