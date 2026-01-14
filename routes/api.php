@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\HeadOfFamilyController;
+use App\Http\Controllers\SocialAssistanceController;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,6 @@ Route::get('head_of_families/all/paginated', [HeadOfFamilyController::class, 'ge
 
 Route::apiResource('family_members', FamilyMemberController::class);
 Route::get('family_members/all/paginated', [FamilyMemberController::class, 'getAllPaginated']);
+
+Route::apiResource('social_assistances', SocialAssistanceController::class);
+Route::get('social_assistances/all/paginated', [SocialAssistanceController::class, 'getAllPaginated']);
