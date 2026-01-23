@@ -26,12 +26,12 @@ class SocialAssistanceController extends Controller
     public function index(Request $request):JsonResponse
     {
         try {
-            $socialAssstances = $this->socialAssistanceRepository->getAll(
+            $socialAssistances = $this->socialAssistanceRepository->getAll(
                 $request->search,
                 $request->limit,
                 true
             );
-            return ResponseHelper::jsonResponse(true, 'Data Bantuan Sosial berhasil Diambil', SocialAssistanceResource::collection($socialAssstances), 200);
+            return ResponseHelper::jsonResponse(true, 'Data Bantuan Sosial berhasil Diambil', SocialAssistanceResource::collection($socialAssistances), 200);
         } catch (\Exception $e) {
             return ResponseHelper::jsonResponse(false, $e->getMessage(), null, 500);
         }
