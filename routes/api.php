@@ -3,6 +3,7 @@
 use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\HeadOfFamilyController;
 use App\Http\Controllers\SocialAssistanceController;
+use App\Http\Controllers\SocialAssistanceRecipientController;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,6 @@ Route::get('family_members/all/paginated', [FamilyMemberController::class, 'getA
 
 Route::apiResource('social_assistances', SocialAssistanceController::class);
 Route::get('social_assistances/all/paginated', [SocialAssistanceController::class, 'getAllPaginated']);
+
+Route::apiResource('social_assistance_recipients', SocialAssistanceRecipientController::class);
+Route::get('social_assistance_recipients/all/paginated', [SocialAssistanceRecipientController::class, 'getAllPaginated']);
