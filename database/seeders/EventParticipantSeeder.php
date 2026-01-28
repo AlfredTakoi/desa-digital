@@ -28,7 +28,6 @@ class EventParticipantSeeder extends Seeder
                 EventParticipant::factory()->create([
                     'event_id' => $event->id,
                     'head_of_family_id' => $headOfFamily->id,
-                    'payment_status' => 'pending',
                 ]);
             }
         }
