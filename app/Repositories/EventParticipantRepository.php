@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Repositories;
-use App\Interfaces\EventRepositoryInterface;
+use App\Interfaces\EventParticipantRepositoryInterface;
+use App\Models\EventParticipant;
 use App\Models\Event;
 use Illuminate\Support\Facades\DB;
 
-class EventRepository implements EventRepositoryInterface {
+class EventParticipantRepository implements EventParticipantRepositoryInterface {
 
     public function getAll(
         ?string $search,
         ?int $limit,
         bool $execute
     ) {
-        $query = Event::where(function ($query) use ($search, $limit, $execute) {
+        $query = EventParticipant::where(function ($query) use ($search, $limit, $execute) {
             if ($search) {
                 $query->search($search);
             }
@@ -41,7 +42,7 @@ class EventRepository implements EventRepositoryInterface {
 
     public function getById(string $id)
     {
-        $query = Event::where('id', $id);
+        $query = EventParticipant::where('id', $id);
         return $query->first();
     }
 
@@ -49,18 +50,18 @@ class EventRepository implements EventRepositoryInterface {
     {
         DB::beginTransaction();
         try {
-            $event = new Event;
-            $event->thumbnail = $data['thumbnail']->store('assets/events', 'public');
-            $event->name = $data['name'];
-            $event->description = $data['description'];
-            $event->price = $data['price'];
-            $event->date = $data['date'];
-            $event->time = $data['time'];
-            $event->is_active = $data['is_active'];
-            $event->save();
-    
+            $event = Event::where('id', $data['event_id'])->first();
+
+            $eventParticipant = new EventParticipant;
+            $eventParticipant->event_id = $data['event_id'];
+            $eventParticipant->head_of_family_id = $data['head_of_family_id'];
+            $eventParticipant->quantity = $data['quantity'];
+            $eventParticipant->total_price = $event->price * $data['quantity'];
+            $eventParticipant->payment_status = "pending";
+            $eventParticipant->save();
+
             DB::commit();
-            return $event;
+            return $eventParticipant;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
@@ -71,23 +72,18 @@ class EventRepository implements EventRepositoryInterface {
     {
         DB::beginTransaction();
         try {
-            $event = Event::find($id);
-            if (!$event) {
-                throw new \Exception('Event tidak ditemukan');
-            }
-            if (isset($data['thumbnail'])) {
-                $event->thumbnail = $data['thumbnail']->store('assets/family-members', 'public');
-            }
-            $event->name = $data['name'];
-            $event->description = $data['description'];
-            $event->price = $data['price'];
-            $event->date = $data['date'];
-            $event->time = $data['time'];
-            $event->is_active = $data['is_active'];
-            $event->save();
-    
+            $event = Event::where('id', $data['event_id'])->first();
+
+            $eventParticipant = EventParticipant::find($id);
+            $eventParticipant->event_id = $data['event_id'];
+            $eventParticipant->head_of_family_id = $data['head_of_family_id'];
+            $eventParticipant->quantity = $data['quantity'];
+            $eventParticipant->total_price = $event->price * $data['quantity'];
+            $eventParticipant->payment_status = "pending";
+            $eventParticipant->save();
+
             DB::commit();
-            return $event;
+            return $eventParticipant;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e->getMessage());
@@ -98,9 +94,9 @@ class EventRepository implements EventRepositoryInterface {
     {
         DB::beginTransaction();
         try {
-            $event = Event::find($id);
-            if ($event) {
-                $event->delete();
+            $eventParticipant = EventParticipant::find($id);
+            if ($eventParticipant) {
+                $eventParticipant->delete();
             }
 
             DB::commit();
