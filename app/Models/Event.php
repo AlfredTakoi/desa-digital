@@ -15,11 +15,23 @@ class Event extends Model
         'thumbnail',
         'name',
         'description',
-        'amount',
+        'price',
         'date',
         'time',
         'is_active',
     ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
+     public function scopeSearch($query, $search)
+    {
+        $search = "%$search%";
+        return $query->where('name', 'LIKE', $search)
+                     ->orWhere('date', 'LIKE', $search)
+                     ->orWhere('price', 'LIKE', $search);
+    }
 
     public function eventParticipants()
     {
