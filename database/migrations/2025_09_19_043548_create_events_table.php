@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->string('name');
             $table->longText('description');
-            $table->decimal('amount',10,2)->default(0);
+            $table->decimal('price',10,2)->default(0);
             $table->date('date');
             $table->time('time');
             $table->boolean('is_active')->default(true);
