@@ -17,6 +17,7 @@ class DevelopmentResource extends JsonResource
         return [
             'id' => $this->id,
             'thumbnail' => $this->thumbnail,
+            'name' => $this->name,
             'description' => $this->description,
             'person_in_charge' => $this->person_in_charge,
             'start_date' => $this->start_date,
