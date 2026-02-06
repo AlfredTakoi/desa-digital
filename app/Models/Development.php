@@ -22,6 +22,14 @@ class Development extends Model
         'amount',
     ];
 
+    public function scopeSearch($query, $search)
+    {
+        $search = "%$search%";
+        return $query->where('name', 'LIKE', $search)
+                     ->orWhere('start_date', 'LIKE', $search)
+                     ->orWhere('end_date', 'LIKE', $search);
+    }
+
     public function developmentApplicants()
     {
         return $this->hasMany(DevelopmentApplicant::class);

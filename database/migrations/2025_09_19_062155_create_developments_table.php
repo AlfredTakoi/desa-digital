@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('amount', 10,2)->default(0);
+            $table->enum('status', ['ongoing', 'completed'])->default('ongoing');
             $table->softDeletes();
             $table->timestamps();
         });
