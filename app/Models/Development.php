@@ -26,6 +26,7 @@ class Development extends Model
     {
         $search = "%$search%";
         return $query->where('name', 'LIKE', $search)
+                     ->orWhere('person_in_charge', 'LIKE', $search)
                      ->orWhere('start_date', 'LIKE', $search)
                      ->orWhere('end_date', 'LIKE', $search);
     }
