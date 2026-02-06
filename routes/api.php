@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DevelopmentApplicantController;
 use App\Http\Controllers\DevelopmentController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventParticipantController;
@@ -46,3 +47,6 @@ Route::get('event_participants/all/paginated', [EventParticipantController::clas
 
 Route::apiResource('developments', DevelopmentController::class);
 Route::get('developments/all/paginated', [DevelopmentController::class, 'getAllPaginated']);
+
+Route::apiResource('development_applicants', DevelopmentApplicantController::class);
+Route::get('development_applicants/all/paginated', [DevelopmentApplicantController::class, 'getAllPaginated']);
